@@ -1,5 +1,16 @@
 var app = {
 
+    renderHomeView: function () {
+        var html =
+            "<div class='header'><h1>Is this going to work?</h1></div>" +
+            "<div class='search-view'>" +
+            "<input class='search-key'/>" +
+            "<ul class='employee-list'></ul>" +
+            "</div>";
+        $('body').html(html);
+        $('.search-key').on('keyup', $.proxy(this.findByname, this));
+    },
+
     findByName: function() {
         console.log('findByName');
         this.store.findByName($('.search-key').val(), function(employees) {
@@ -17,6 +28,7 @@ var app = {
         var self = this;
         this.store = new MemoryStore(function() {
             self.showAlert('Store Initialized', 'Info');
+            self.renderHomeView();
         });
         $('.search-key').on('keyup', $.proxy(this.findByName, this));
     }
